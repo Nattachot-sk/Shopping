@@ -9,7 +9,7 @@ function fetchFromLocalStorage() {
         return JSON.parse(value);
     }
     else {
-        return []; // empty array
+        return [];
     }
 }
 
@@ -28,15 +28,15 @@ export const navbarSlice = createSlice({
         add: (state, action) => {
             const existingProduct = state.value.find(eachProduct => eachProduct.id_product === action.payload.id_product);
 
-            // Eklemek istediğim ürün sepette mevcut ise
+ 
             if (existingProduct) {
-                existingProduct.quantity += 1; // Sepetteki adedini artır
-                // console.log(existingProduct.quantity, "quantity");
+                existingProduct.quantity += 1; 
+
             }
 
             state.value = [...state.value, { ...action.payload, quantity: 1 }];
 
-            // Sepette sadece bir kere göstermek için, aynı ürünleri birleştir
+
             const uniqueProducts = state.value.filter((product, index, self) =>
                 index === self.findIndex(p => p.id_product === product.id_product)
             );
@@ -55,10 +55,9 @@ export const navbarSlice = createSlice({
         remove: (state, action) => {
             const index = state.value.findIndex(product => product.id_product === action.payload);
 
-            // Eğer bulunan indeks -1 değilse (yani ürün bulunduysa),
-            // bu, ürünün dizide bulunduğu anlamına gelir.
+
             if (index !== -1) {
-                state.value.splice(index, 1); // Sepetten bu indeksi kullanarak 1 öğeyi çıkarır.
+                state.value.splice(index, 1); 
 
                 storeInLocalStorage(state.value);
                 Swal.fire({
@@ -77,7 +76,7 @@ export const navbarSlice = createSlice({
 
             if (index !== -1) {
                 if (state.value[index].quantity > 1) {
-                    // Ürünün adeti 1'den büyükse, adedini azalt
+
                     state.value[index].quantity -= 1;
 
                     storeInLocalStorage(state.value);

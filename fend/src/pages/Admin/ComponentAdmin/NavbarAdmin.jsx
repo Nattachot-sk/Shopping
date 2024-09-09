@@ -68,8 +68,8 @@ function NavbarAdmin() {
                       className={({ isActive }) =>
                         `w-full text-left  ${
                           isActive
-                            ? "px-5 pl py-2 border-2 bg-indigo-400 text-white border-indigo-600"
-                            : "hover:bg-yellow-400 hover:border-indigo-600"
+                            ? "  py-2  text-black underline"
+                            : "hover:bg-yellow-400 "
                         }`
                       }
                     >

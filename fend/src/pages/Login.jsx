@@ -16,46 +16,57 @@ function Login() {
   const navigate = useNavigate();
 
   axios.defaults.withCredentials = true;
-  const handleSubmitLogin = (event) => {
+  const handleSubmitLogin = async (event) => {
     event.preventDefault();
-    axios
-      .post("http://localhost:3307/login", {
+  
+    try {
+      const res = await axios.post("http://localhost:3307/login", {
         email: email,
         password: password,
-      })
-      .then((res) => {
-        if (res.data.Status === "OK") {
-          const userData = { role: res.data.role };
-          if (res.data.role === "admin") {
-            navigate("/admin");
-            Swal.fire({
-              position: "top",
-              icon: "success",
-              title: "Admin Login success",
-              showConfirmButton: false,
-              timer: 1500,
-            });
-          }else if(res.data.role === "member") {
-            navigate("/", { state: userData });
-            Swal.fire({
-              position: "top",
-              icon: "success",
-              title: "User login success",
-              showConfirmButton: false,
-              timer: 1500,
-            });
-          }
-
-        } else {
+      });
+  
+      if (res.data.Status === "OK") {
+        const userData = { role: res.data.role , token: res.data.token};
+        console.log(userData)
+        if (res.data.role === "admin") {
+          navigate("/admin");
           Swal.fire({
             position: "top",
-            icon: "error",
-            title: res.data.Error,
+            icon: "success",
+            title: "Admin Login success",
             showConfirmButton: false,
+            timer: 1500,
+          });
+        } else if (res.data.role === "member") {
+          navigate("/", { state: userData });
+          Swal.fire({
+            position: "top",
+            icon: "success",
+            title: "User login success",
+            showConfirmButton: false,
+            timer: 1500,
           });
         }
-      })
-      .then((err) => console.log(err));
+      } else {
+        Swal.fire({
+          position: "top",
+          icon: "error",
+          title: res.data.Error,
+          showConfirmButton: false,
+        });
+      }
+    } catch (err) {
+      console.error(err); // แสดงข้อผิดพลาดใน console
+  
+      // แสดงข้อความข้อผิดพลาดให้ผู้ใช้
+      Swal.fire({
+        position: "top",
+        icon: "error",
+        title: "An error occurred. Please try again later.",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
   };
 
   return (

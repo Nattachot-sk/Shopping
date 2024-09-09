@@ -125,13 +125,21 @@ function Cart() {
                 </div>
               ))}
 
-              <div className="mt-5 text-xl font-bold text-right">
-                <span>Total Price: </span>
+              <div className="mt-5 text-xl font-bold  flex justify-around">
+<div>
+  ยืนยัน
+</div>
+
+              <div>
+              <span>Total Price: </span>
                 <span>$</span>
                 <span>{calculateTotalPrice().toFixed(2)}</span>
+              </div>
+
                 
               </div>
             </>
+            
           )}
         </div>
       </div>

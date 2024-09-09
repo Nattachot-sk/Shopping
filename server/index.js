@@ -177,7 +177,7 @@ app.post("/login", (req, res) => {
               }
             );
             res.cookie("token", token);
-            return res.json({ Status: "OK", role });
+            return res.json({ Status: "OK", role, token });
           } else {
             return res.json({ Error: "รหัสผ่านไม่ถูกต้อง" });
           }
@@ -399,6 +399,33 @@ app.delete("/deleteproduct/:id", (req, res) => {
     console.log("error", error);
   }
 });
+
+//order //
+
+app.post("/addorders", (req, res) => {
+  try {
+    const orderData = [
+      req.body.id_product,
+      req.body.id_member,
+      req.body.totalAmount,
+      req.body.totalPrice,
+      req.body.shoppingAddress,
+      req.body.contactNumber,
+      req.body.status,
+    ]
+
+
+    const sql =
+      "INSERT INTO orders (`id_product`,`id_member`,`totalAmount`,`totalPrice`,`shoppingAddress`,`contactNumber`,`status`) VALUES (?,?,?,?,?,?,?)";
+    db.query(sql, orderData, (err, data) => {
+      if (err) return res.json({ Error: "Error" });
+      return res.json({ Status: "OK" });
+    });
+  } catch (error) {
+    console.log("error", error);
+  }
+});
+
 
 app.post("/addcontact", (req, res) => {
   try {

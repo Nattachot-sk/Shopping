@@ -15,6 +15,7 @@ import Swal from "sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
 
 function Navbar2() {
+
   const [auth, setAuth] = useState(false);
   const [role, setRole] = useState();
   const navigate = useNavigate();
@@ -34,19 +35,20 @@ function Navbar2() {
     window.scroll({ top: 0, behavior: "smooth" });
   }
 
-  useEffect(() => {
-    const fetchAuthAdmin = async () => {
+
+
+  const fetchAuthAdmin = async () =>{
       try {
         const res = await axios.get("http://localhost:3307/admin");
         setRole(res.data.role);
-        // Assuming the response has a 'role' field
+
       } catch (error) {
         console.error("Error fetching admin data:", error);
       }
-    };
-
+  }
+  useEffect(() =>{
     fetchAuthAdmin();
-  }, []);
+  },[role])
 
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
