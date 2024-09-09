@@ -113,12 +113,12 @@ app.post("/register", (req, res) => {
     const { email, password, confirmPassword, firstname, lastname, age, role } =
       req.body;
 
-    // ตรวจสอบว่ารหัสผ่านและการยืนยันรหัสผ่านตรงกันหรือไม่
+
     if (password !== confirmPassword) {
       return res.json({ Error: "Passwords do not match" });
     }
 
-    // ตรวจสอบว่าอีเมลซ้ำกันหรือไม่
+
     const checkEmailQuery = "SELECT * FROM member WHERE email = ?";
     db.query(checkEmailQuery, [email], (err, results) => {
       if (err) {
@@ -127,10 +127,10 @@ app.post("/register", (req, res) => {
       }
 
       if (results.length > 0) {
-        // ถ้ามีอีเมลนี้ในฐานข้อมูลแล้ว
+
         return res.json({ Error: "Email already exists" });
       } else {
-        // ถ้าไม่มีอีเมลนี้ในฐานข้อมูล ทำการเพิ่มข้อมูล
+
         const sql =
           "INSERT INTO member (`email`, `password`, `firstname`, `lastname`, `age`, `role`) VALUES(?)";
 

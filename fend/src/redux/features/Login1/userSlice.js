@@ -9,7 +9,7 @@ export const loginUser = createAsyncThunk('user/login', async (userData) => {
 
 export const fetchRole = createAsyncThunk('user/fetchRole', async () => {
   const response = await axios.get('http://localhost:3307/admin');
-  return response.data.role; // คืนค่า role
+  return response.data.role; 
 });
 
 const userSlice = createSlice({
@@ -23,16 +23,16 @@ const userSlice = createSlice({
   reducers: {
     logout: (state) => {
       state.user = null;
-      state.role = null; // ล้างข้อมูล role เมื่อออกจากระบบ
+      state.role = null; 
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(loginUser.fulfilled, (state, action) => {
-        state.user = action.payload; // เก็บข้อมูลผู้ใช้
+        state.user = action.payload;
       })
       .addCase(fetchRole.fulfilled, (state, action) => {
-        state.role = action.payload; // เก็บข้อมูล role
+        state.role = action.payload;
       });
   },
 });

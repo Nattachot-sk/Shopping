@@ -3,7 +3,7 @@ import axios from "axios";
 
 const initialState = {
     loading: false,
-    value: [], // empty array
+    value: [],
     error: ""
 }
 
@@ -11,7 +11,7 @@ export const getProducts = createAsyncThunk("getProducts", async () => {
     const response = await axios.get("http://localhost:3307/product");
     // console.log(response);
     // console.log(response.data);
-    // console.log(response.data.products); // Returns a 20-element array where each element is an object.
+    // console.log(response.data.products); 
     return response.data.products;
     
 })
@@ -27,7 +27,7 @@ export const productsSlice = createSlice({
 
         builder.addCase(getProducts.fulfilled, (state, action) => {
             state.loading = false;
-            state.value = action.payload; // api'den gelen verileri value'ya doldurma işlemi
+            state.value = action.payload;
         })
 
         builder.addCase(getProducts.rejected, (state, action) => {
