@@ -7,12 +7,14 @@ const session = require("express-session");
 const bcrypt = require("bcrypt");
 const salt = 10;
 const port = 3307;
+const env =require('dotenv')
 
 const app = express();
+env.config()
 app.use(express.json());
 app.use(
   cors({
-    origin: ["http://localhost:5173"],
+    origin: [`${process.env.COR_ORIGIN}`],
     methods: ["POST", "GET", "PUT", "DELETE"],
     credentials: true,
   })
@@ -31,10 +33,10 @@ app.use(
 );
 app.use(express.static("public"));
 const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
+  host: `${process.env.HOST}`,
+  user: `${process.env.USER}`,
   password: "",
-  database: "shoppingclothes",
+  database: `${process.env.DATABASE}`,
 });
 
 const verifyUser = (req, res, next) => {
@@ -290,6 +292,7 @@ app.get("/product/:id", (req, res) => {
 
 const multer = require("multer");
 const path = require("path");
+const { config } = require("dotenv");
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "public/images");
